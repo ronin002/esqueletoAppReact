@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import styles from './Register.module.css'
 import Link from 'next/link';
+import internal from "stream";
+import { Interface } from "readline";
 
 const Register = () => {
 	
+	interface userRegister {
+		firstName: string;
+		email: string;
+		password: string;
+	}
 	
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
@@ -23,6 +30,18 @@ const Register = () => {
 	const [errorEmail, setErrorEmail] = useState("");
 	const [errorPwd, setErrorPwd] = useState("");
 	
+	async function saveUser(user){
+		const response = await fetch('/api/user/register', {
+			method: 'POST',
+			body: JSON.stringify(user)
+		})
+
+		if (!response.ok){
+			throw new Error(response.statusText);
+		}
+
+		return await response.json();
+	}
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -30,7 +49,17 @@ const Register = () => {
 		
 		if (validate() !== true) return;
 
+
+		const userReg : userRegister = {
+			firstName : name,
+			email : email,
+			password : pwd1
+		};
+
+		saveUser(userReg);
+
 	};
+
 
 	function validate(){
 
@@ -38,7 +67,7 @@ const Register = () => {
 		if (validaEmail() === false) return false;
 		if (validaPassword() === false) return false;
 		
-		console.log("VALIDA OK");
+		//console.log("VALIDA OK");
 
 		return true;
 	}
@@ -110,8 +139,7 @@ const Register = () => {
 			<div className={styles.wrap_login}>
 				
 				<form className={styles.form_login} onSubmit={handleSubmit}> 
-				
-					
+
 					{/* <div style={{align-items: "center"; text-align: "center"}}> */}
 					<div className={styles.div_logo}>
 						<Link href="#">
@@ -124,9 +152,7 @@ const Register = () => {
 						</Link>
 					</div>
 					<br/>
-					<span class="login100-form-title p-b-48">
-						<i class="zmdi zmdi-font"></i>
-					</span>
+			
 
 					<div className={styles.divInputLogin} >
 						<input className={styles.inputLogin} 
@@ -150,9 +176,7 @@ const Register = () => {
 					</span>
 					
 					<div  className={styles.divInputLogin} >
-						<span class="btn-show-pass">
-							<i class="zmdi zmdi-eye"></i>
-						</span>
+						
 						<input className={styles.inputLogin} 
 							type="password" 
 							placeholder="Password"
@@ -161,9 +185,7 @@ const Register = () => {
 					</div>
 
 					<div  className={styles.divInputLogin} >
-						<span class="btn-show-pass">
-							<i class="zmdi zmdi-eye"></i>
-						</span>
+						
 						<input className={styles.inputLogin} 
 							type="password" 
 							placeholder="Confirme Password" 
@@ -176,31 +198,31 @@ const Register = () => {
 						{errorPwd}<br/>
 					</span>
 
-					<div class="container-login100-form-btn">
-						<div class="wrap-login100-form-btn">
-							<div class="login100-form-bgbtn"></div>
+					<div >
+						<div >
+							<div></div>
 							<button className={styles.btnLogin} type="submit">
 								Cadastrar
 							</button>
 						</div>
 					</div>
 
-					<div class="text-center p-t-115">
-						<span class="txt1">
+					<div>
+						<span>
 							Esqueceu a senha?
 						</span>
 
-						<Link class="txt2" href="/recovery">
+						<Link href="/recovery">
 							Recuperar
 						</Link>
 					</div>
 
-					<div class="text-center p-t-115">
-						<span class="txt1">
+					<div >
+						<span >
 							Já possui uma conta?
 						</span>
 
-						<Link class="txt2" href="/login">
+						<Link href="/login">
 							Login
 						</Link>
 					</div> 

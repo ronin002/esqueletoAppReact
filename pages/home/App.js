@@ -13,11 +13,12 @@ function App() {
      
 
         <Header/>
-         <Home/> 
-         <Login/>
-         <Recovery/>
+     
          <Register/>
         {/* 
+            <Home/> 
+         <Login/>
+         <Recovery/>
          <Login/>
         <Register/>
         

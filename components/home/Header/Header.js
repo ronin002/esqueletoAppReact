@@ -14,7 +14,7 @@ class Header extends React.Component{
             <header id="header" className={styles.header}  >
                 <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
                   
-                    <Link href="#"  class="logo d-flex align-items-center" >
+                    <Link href="#"  >
                         <Image src={Logo} width={25} height={25} alt="" />
                         <span className={styles.corVermelha}>Your</span><span className={styles.corAzul}>Company</span>
                     </Link>
@@ -22,7 +22,7 @@ class Header extends React.Component{
 
                     <nav id="navbar" className={styles.nav} >
                         <ul className={styles.ul} >
-                            <li className={styles.li} ><Link className={styles.liLink} href="#hero" >Home</Link></li>
+                           <li className={styles.li} ><Link className={styles.liLink} href="#hero" >Home</Link></li>
                            <li className={styles.li}><Link className={styles.liLink}  href="#about" >Sobre</Link></li>
 
                             <li className={styles.li}><Link className={styles.liLink}  href="#pricing" >Preços</Link></li>
