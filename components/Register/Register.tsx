@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styles from './Register.module.css'
 import Link from 'next/link';
-import internal from "stream";
-import { Interface } from "readline";
+//import internal from "stream";
+//import { Interface } from "readline";
+import { v4 } from 'uuid';
+import Router from 'next/router'
 
 const Register = () => {
 	
@@ -10,6 +12,7 @@ const Register = () => {
 		firstName: string;
 		email: string;
 		password: string;
+		token: string;
 	}
 	
 	const [name, setName] = useState("");
@@ -31,7 +34,7 @@ const Register = () => {
 	const [errorPwd, setErrorPwd] = useState("");
 	
 	async function saveUser(user){
-		const response = await fetch('/api/user/register', {
+		const response = await fetch('/api/user/register/register', {
 			method: 'POST',
 			body: JSON.stringify(user)
 		})
@@ -39,7 +42,26 @@ const Register = () => {
 		if (!response.ok){
 			throw new Error(response.statusText);
 		}
+		
+		const res = await fetch("/api/mail/sendMailConfirm", {
+			body: JSON.stringify({
+			  email: email,
+			  fullname: user.name,
+			  subject: "Create account confirmation mail"
+			}),
+			headers: {
+			  "Content-Type": "application/json",
+			},
+			method: "POST",
+		});
 
+		const { error } = await res.json();
+		if (error) {
+			console.log(error);
+			return;
+		}
+
+		Router.push('/user/confirmRegister');
 		return await response.json();
 	}
 
@@ -49,14 +71,18 @@ const Register = () => {
 		
 		if (validate() !== true) return;
 
-
+		const vToken = v4(); //uuid v4
 		const userReg : userRegister = {
 			firstName : name,
 			email : email,
-			password : pwd1
+			password : pwd1,
+			token: vToken
 		};
 
 		saveUser(userReg);
+
+		
+	
 
 	};
 

@@ -14,7 +14,7 @@ function App() {
 
         <Header/>
      
-         <Register/>
+        <Register/>
         {/* 
             <Home/> 
          <Login/>
