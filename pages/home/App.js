@@ -12,9 +12,9 @@ function App() {
     <>
      
 
-        <Header/>
+        {/* <Header/>
      
-        <Register/>
+        <Register/> */}
         {/* 
             <Home/> 
          <Login/>

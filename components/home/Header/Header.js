@@ -41,8 +41,8 @@ class Header extends React.Component{
                         
                             { !hasUser ?
                                 <>
-                                    <li className={styles.li}><Link className={styles.liLink} href="/login" >Login</Link></li>
-                                    <li className={styles.li}><Link className={styles.liLink}   href="/register" >Cadastre-se</Link></li>
+                                    <li className={styles.li}><Link className={styles.liLink} href="./../../../user/login/" >Login</Link></li>
+                                    <li className={styles.li}><Link className={styles.liLink}   href="./../../../user/register/" >Cadastre-se</Link></li>
                                 </>
                             :
                                 <>
